@@ -13,5 +13,16 @@ UCLASS()
 class COOPARPG_API AARPGCharacter : public AARPGCharacterBase
 {
 	GENERATED_BODY()
+
+public:
+	AARPGCharacter();
+
+protected:
+
+	UPROPERTY(EditAnywhere, Category = Camera)
+	TObjectPtr<USpringArmComponent> SpringArmComp;
+
+	UPROPERTY(EditAnywhere, Category = Camera)
+	TObjectPtr<UCameraComponent> CameraComp;
 	
 };
