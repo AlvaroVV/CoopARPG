@@ -1,34 +1,42 @@
 ﻿
 #include "Interaction/InteractableComponent.h"
 
-
 UInteractableComponent::UInteractableComponent()
 {
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 	
 }
 
-
-
-void UInteractableComponent::TickComponent(float DeltaTime, ELevelTick TickType,
-                                           FActorComponentTickFunction* ThisTickFunction)
+void UInteractableComponent::BeginPlay()
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	Super::BeginPlay();
 
-	if (bIsHighlighted)
+	RegisterInteractableMesh(GetOwner()->FindComponentByClass<UMeshComponent>());
+	
+}
+
+void UInteractableComponent::RegisterInteractableMesh(UMeshComponent* MeshComp)
+{
+	if (MeshComp != nullptr)
 	{
-		DrawDebugSphere(GetWorld(), GetOwner()->GetActorLocation(), 32.0f, 12, FColor::Red);
+		MeshComp->SetCustomDepthStencilValue(static_cast<uint8>(InteractableType));
+		MeshComponents.Add(MeshComp);
 	}
 }
 
-void UInteractableComponent::HighlighActor()
+void UInteractableComponent::HighlightActor()
 {
 	bIsHighlighted = true;
+	for (UMeshComponent* MeshComp : MeshComponents)
+		MeshComp->SetRenderCustomDepth(true);
 }
 
-void UInteractableComponent::UnHighlighActor()
+void UInteractableComponent::UnHighlightActor()
 {
 	bIsHighlighted = false;
+	for (UMeshComponent* MeshComp : MeshComponents)
+		MeshComp->SetRenderCustomDepth(false);
 }
+
 
 

@@ -5,7 +5,6 @@
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
 #include "Interaction/InteractableComponent.h"
-#include "Interaction/InteractableInterface.h"
 
 AARPGPlayerController::AARPGPlayerController()
 {
@@ -85,9 +84,7 @@ void AARPGPlayerController::CursorTrace()
 		if (CurrentActorIntComp.IsValid())
 		{
 			//Case B. LastActor is null and CurrentActor is valid.
-			//CurrentActor->HighlighActor();
-			//IInteractableInterface::Execute_HighlighActor(CurrentActor.GetObject());
-			CurrentActorIntComp->HighlighActor();
+			CurrentActorIntComp->HighlightActor();
 		}
 		else
 		{
@@ -99,21 +96,15 @@ void AARPGPlayerController::CursorTrace()
 		if (!CurrentActorIntComp.IsValid())
 		{
 			//Case C.LastActor is valid and CurrentActor is null.
-			//LastActor->UnHighlighActor();
-			//IInteractableInterface::Execute_UnHighlighActor(LastActor.GetObject());
-			LastActorIntComp->UnHighlighActor();
+			LastActorIntComp->UnHighlightActor();
 		}
 		else
 		{
 			// Case D. Different Actors
 			if (CurrentActorIntComp != LastActorIntComp)
 			{
-				//CurrentActor->HighlighActor();
-				//IInteractableInterface::Execute_HighlighActor(CurrentActor.GetObject());
-				CurrentActorIntComp->HighlighActor();
-				//LastActor->UnHighlighActor();
-				//IInteractableInterface::Execute_UnHighlighActor(LastActor.GetObject());
-				LastActorIntComp->UnHighlighActor();
+				CurrentActorIntComp->HighlightActor();
+				LastActorIntComp->UnHighlightActor();
 			}
 			else
 			{
