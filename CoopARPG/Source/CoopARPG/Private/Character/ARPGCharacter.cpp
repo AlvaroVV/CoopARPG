@@ -2,8 +2,11 @@
 
 
 #include "Character/ARPGCharacter.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "Camera/CameraComponent.h"
 
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Player/ARPGPlayerState.h"
 
 
 AARPGCharacter::AARPGCharacter()
@@ -31,5 +34,35 @@ AARPGCharacter::AARPGCharacter()
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationRoll = false;
 	bUseControllerRotationYaw = false;
+}
+
+void AARPGCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	if (HasAuthority())
+	{
+		InitAbilityActorInfo();
+	}
+}
+
+void AARPGCharacter::OnRep_PlayerState()
+{
+	Super::OnRep_PlayerState();
+
+	if (!HasAuthority())
+	{
+		InitAbilityActorInfo();
+	}
+}
+
+void AARPGCharacter::InitAbilityActorInfo()
+{
+	AARPGPlayerState* ARPGPlayerState = GetPlayerState<AARPGPlayerState>();
+	check(ARPGPlayerState);
+	AbilitySystemComp = ARPGPlayerState->GetAbilitySystemComponent();
+	AttributeSet = ARPGPlayerState->GetAttributeSet();
+
+	AbilitySystemComp->InitAbilityActorInfo(ARPGPlayerState, this);
 }
 

@@ -3,17 +3,32 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AbilitySystemInterface.h"
 #include "GameFramework/PlayerState.h"
 #include "ARPGPlayerState.generated.h"
+
+class UAbilitySystemComponent;
+class UAttributeSet;
 
 /**
  * 
  */
 UCLASS()
-class COOPARPG_API AARPGPlayerState : public APlayerState
+class COOPARPG_API AARPGPlayerState : public APlayerState, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
 public:
 	AARPGPlayerState();
+
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+	UAttributeSet* GetAttributeSet() const {return AttributeSet;} 
+
+protected:
+	
+	UPROPERTY()
+	TObjectPtr<UAbilitySystemComponent> AbilitySystemComp;
+
+	UPROPERTY()
+	TObjectPtr<UAttributeSet> AttributeSet;
 };

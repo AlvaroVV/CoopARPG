@@ -12,7 +12,7 @@ class UInteractableComponent;
 
 
 UCLASS()
-class COOPARPG_API AARPGEnemy : public AARPGCharacterBase//, public IInteractableInterface
+class COOPARPG_API AARPGEnemy : public AARPGCharacterBase
 {
 	GENERATED_BODY()
 
@@ -22,6 +22,7 @@ public:
 	virtual void BeginPlay() override;
 	
 private:
+	
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UInteractableComponent> InteractableComp;
 	

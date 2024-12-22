@@ -12,6 +12,11 @@ AARPGCharacterBase::AARPGCharacterBase()
 	Weapon->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
+UAbilitySystemComponent* AARPGCharacterBase::GetAbilitySystemComponent() const
+{
+	return AbilitySystemComp;
+}
+
 // Called when the game starts or when spawned
 void AARPGCharacterBase::BeginPlay()
 {

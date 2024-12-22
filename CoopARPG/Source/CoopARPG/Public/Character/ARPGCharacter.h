@@ -6,6 +6,9 @@
 #include "Character/ARPGCharacterBase.h"
 #include "ARPGCharacter.generated.h"
 
+class USpringArmComponent;
+class UCameraComponent;
+
 /**
  * 
  */
@@ -17,6 +20,9 @@ class COOPARPG_API AARPGCharacter : public AARPGCharacterBase
 public:
 	AARPGCharacter();
 
+	virtual void PossessedBy(AController* NewController) override;
+	virtual void OnRep_PlayerState() override;
+	
 protected:
 
 	UPROPERTY(EditAnywhere, Category = Camera)
@@ -24,5 +30,10 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = Camera)
 	TObjectPtr<UCameraComponent> CameraComp;
+
+private:
+
+	void InitAbilityActorInfo();
+
 	
 };
