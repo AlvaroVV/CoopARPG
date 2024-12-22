@@ -11,3 +11,9 @@ AARPGEnemy::AARPGEnemy()
 	InteractableComp = CreateDefaultSubobject<UInteractableComponent>(TEXT("InteractableComp"));
 }
 
+void AARPGEnemy::BeginPlay()
+{
+	Super::BeginPlay();
+	InteractableComp->RegisterInteractableMesh(Weapon);
+}
+

@@ -18,7 +18,9 @@ class COOPARPG_API AARPGEnemy : public AARPGCharacterBase//, public IInteractabl
 
 public:
 	AARPGEnemy();
-
+	
+	virtual void BeginPlay() override;
+	
 private:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UInteractableComponent> InteractableComp;
