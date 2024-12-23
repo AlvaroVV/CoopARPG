@@ -21,3 +21,4 @@ UAbilitySystemComponent* AARPGPlayerState::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComp;
 }
+

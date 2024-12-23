@@ -40,16 +40,16 @@ void AARPGCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
 
-	if (HasAuthority())
-	{
-		InitAbilityActorInfo();
-	}
+	//Only called on Server already.
+	InitAbilityActorInfo();
+	
 }
 
 void AARPGCharacter::OnRep_PlayerState()
 {
 	Super::OnRep_PlayerState();
 
+	//Seems like it's only called on Clients already
 	if (!HasAuthority())
 	{
 		InitAbilityActorInfo();
