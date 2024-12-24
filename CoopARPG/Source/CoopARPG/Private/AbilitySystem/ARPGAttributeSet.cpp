@@ -5,6 +5,14 @@
 #include "AbilitySystemComponent.h"
 #include "Net/UnrealNetwork.h"
 
+UARPGAttributeSet::UARPGAttributeSet()
+{
+	InitHealth((100.0f));
+	InitMaxHealth((100.0f));
+	InitMana((20.0f));
+	InitMaxMana((20.0f));
+}
+
 void UARPGAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);

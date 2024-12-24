@@ -3,9 +3,16 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AbilitySystemComponent.h"
 #include "AttributeSet.h"
 
 #include "ARPGAttributeSet.generated.h"
+
+#define ATTRIBUTE_ACCESSORS(ClassName, PropertyName) \
+	GAMEPLAYATTRIBUTE_PROPERTY_GETTER(ClassName, PropertyName) \
+	GAMEPLAYATTRIBUTE_VALUE_GETTER(PropertyName) \
+	GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
+	GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
 
 /**
  * 
@@ -22,9 +29,11 @@ public:
 	/* --- HEALTH ---- */
 	UPROPERTY(ReplicatedUsing = OnRep_Health, BlueprintReadOnly, Category = "Base Attributes")
 	FGameplayAttributeData Health;
+	ATTRIBUTE_ACCESSORS(UARPGAttributeSet, Health);
 
 	UPROPERTY(ReplicatedUsing = OnRep_MaxHealth, BlueprintReadOnly, Category = "Base Attributes")
 	FGameplayAttributeData MaxHealth;
+	ATTRIBUTE_ACCESSORS(UARPGAttributeSet, MaxHealth);
 
 	UFUNCTION()
 	void OnRep_Health(const FGameplayAttributeData& OldHealth) const;
@@ -34,10 +43,12 @@ public:
 	/* --- MANA ---- */
 	UPROPERTY(ReplicatedUsing = OnRep_Mana, BlueprintReadOnly, Category = "Base Attributes")
 	FGameplayAttributeData Mana;
-
+	ATTRIBUTE_ACCESSORS(UARPGAttributeSet, Mana);
+	
 	UPROPERTY(ReplicatedUsing = OnRep_MaxMana, BlueprintReadOnly, Category = "Base Attributes")
 	FGameplayAttributeData MaxMana;
-
+	ATTRIBUTE_ACCESSORS(UARPGAttributeSet, MaxMana);
+	
 	UFUNCTION()
 	void OnRep_Mana(const FGameplayAttributeData& OldMana) const;
 	UFUNCTION()
