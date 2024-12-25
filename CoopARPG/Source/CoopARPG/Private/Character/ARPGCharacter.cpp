@@ -6,7 +6,9 @@
 #include "Camera/CameraComponent.h"
 
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Player/ARPGPlayerController.h"
 #include "Player/ARPGPlayerState.h"
+#include "UI/HUD/ARPGHUD.h"
 
 
 AARPGCharacter::AARPGCharacter()
@@ -64,5 +66,13 @@ void AARPGCharacter::InitAbilityActorInfo()
 	AttributeSet = ARPGPlayerState->GetAttributeSet();
 
 	AbilitySystemComp->InitAbilityActorInfo(ARPGPlayerState, this);
+
+	//Check local player as the other clients dont have access to other controllers or HUDs
+	if (IsLocallyControlled())
+	{
+		AARPGPlayerController* playerController = Cast<AARPGPlayerController>(GetController());
+		AARPGHUD* hud =  Cast<AARPGHUD>(playerController->GetHUD());
+		hud->InitOverlay(playerController,ARPGPlayerState, AbilitySystemComp, AttributeSet);
+	}
 }
 

@@ -6,7 +6,12 @@
 #include "GameFramework/HUD.h"
 #include "ARPGHUD.generated.h"
 
+struct FWidgetControllerParams;
+class UARPGOverlayWidgetController;
 class UARPGUserWidget;
+class UAbilitySystemComponent;
+class UAttributeSet;
+
 /**
  * 
  */
@@ -17,14 +22,22 @@ class COOPARPG_API AARPGHUD : public AHUD
 
 public:
 
+
+	UARPGOverlayWidgetController* GetOverlayWidgetController(const FWidgetControllerParams& WidgetControllerParams);
+
+	void InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* Asc, UAttributeSet* Aset);
+	
+private:
+	
 	UPROPERTY()
 	TObjectPtr<UARPGUserWidget> OverlayWidget;
 
-protected:
-	virtual void BeginPlay() override;
-	
-private:
-
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UARPGUserWidget> OverlayWidgetClass;
+
+	UPROPERTY()
+	TObjectPtr<UARPGOverlayWidgetController> OverlayWidgetController;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UARPGOverlayWidgetController> OverlayWidgetControllerClass;
 };
