@@ -45,6 +45,8 @@ class COOPARPG_API UARPGWidgetController : public UObject
 public:
 	UFUNCTION(BlueprintCallable, Category = "WidgetController")
 	void SetWidgetControllerParams(const FWidgetControllerParams& WCParams);
+	virtual void BroadcastInitialValues();
+	virtual void BindCallbacksDependencies();
 
 protected:
 

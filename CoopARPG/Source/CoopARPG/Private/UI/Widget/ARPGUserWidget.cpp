@@ -6,5 +6,5 @@
 void UARPGUserWidget::SetWidgetController(UObject* NewWidgetController)
 {
 	WidgetController = NewWidgetController;
-	WidgetControllerSet();
+	OnWidgetControllerSet();
 }

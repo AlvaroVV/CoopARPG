@@ -42,7 +42,8 @@ void AARPGEffectActor::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActo
 	{
 		const UARPGAttributeSet* AttSet = Cast<UARPGAttributeSet> (ASCInterface->GetAbilitySystemComponent()->GetAttributeSet(UARPGAttributeSet::StaticClass()));
 		UARPGAttributeSet* MutableAttSet = const_cast<UARPGAttributeSet*>(AttSet);
-		MutableAttSet->SetHealth(AttSet->GetHealth() + 10.0f);
+		MutableAttSet->SetHealth(AttSet->GetHealth() + 25.0f);
+		MutableAttSet->SetMana(AttSet->GetMana() - 5.0f);
 		SetLifeSpan(0.1);
 	}
 }

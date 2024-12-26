@@ -10,3 +10,12 @@ void UARPGWidgetController::SetWidgetControllerParams(const FWidgetControllerPar
 	AbilitySystemComp = WCParams.AbilitySystemComponent;
 	AttributeSet = WCParams.AttributeSet;
 }
+
+void UARPGWidgetController::BroadcastInitialValues()
+{
+	
+}
+
+void UARPGWidgetController::BindCallbacksDependencies()
+{
+}

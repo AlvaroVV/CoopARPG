@@ -13,6 +13,7 @@ UARPGOverlayWidgetController* AARPGHUD::GetOverlayWidgetController(
 	{
 		OverlayWidgetController = NewObject<UARPGOverlayWidgetController>(this, OverlayWidgetControllerClass);
 		OverlayWidgetController->SetWidgetControllerParams(WidgetControllerParams);
+		OverlayWidgetController->BindCallbacksDependencies();
 	}
 
 	return OverlayWidgetController;
@@ -23,14 +24,14 @@ void AARPGHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySyst
 	checkf(OverlayWidgetClass, TEXT ("Overlay widget class uninitialized"));
 	checkf(OverlayWidgetControllerClass, TEXT ("OverlayController class uninitialized"));
 	
-	UUserWidget* widget = CreateWidget<UUserWidget>(GetWorld(), OverlayWidgetClass);
-	OverlayWidget = static_cast<UARPGUserWidget*>(widget);
+	OverlayWidget = static_cast<UARPGUserWidget*>(CreateWidget<UUserWidget>(GetWorld(), OverlayWidgetClass));
 
 	const FWidgetControllerParams widgetControllerParams(PC, PS, Asc, Aset);
 	UARPGOverlayWidgetController* widgetController = GetOverlayWidgetController(widgetControllerParams);
 
 	OverlayWidget->SetWidgetController(widgetController);
+	widgetController->BroadcastInitialValues();
 	
-	widget->AddToViewport();
+	OverlayWidget->AddToViewport();
 }
 
