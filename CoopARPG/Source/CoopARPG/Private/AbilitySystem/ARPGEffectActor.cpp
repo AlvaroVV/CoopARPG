@@ -3,24 +3,17 @@
 
 #include "AbilitySystem/ARPGEffectActor.h"
 
+#include "AbilitySystemBlueprintLibrary.h"
+#include "AbilitySystemComponent.h"
 #include "AbilitySystemInterface.h"
-#include "AbilitySystem/ARPGAbilitySystemComponent.h"
-#include "AbilitySystem/ARPGAttributeSet.h"
-#include "Components/SphereComponent.h"
-#include "Misc/MapErrors.h"
 
 
 // Sets default values
 AARPGEffectActor::AARPGEffectActor()
 {
-	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
-	StaticMeshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComponent"));
-	SetRootComponent(StaticMeshComp);
-	
-	SphereComp = CreateDefaultSubobject<USphereComponent>("SphereComponent");
-	SphereComp->SetupAttachment(GetRootComponent());
+	SetRootComponent(CreateDefaultSubobject<USceneComponent>(TEXT("Root")));
 }
 
 
@@ -28,27 +21,22 @@ AARPGEffectActor::AARPGEffectActor()
 void AARPGEffectActor::BeginPlay()
 {
 	Super::BeginPlay();
-	SphereComp->OnComponentBeginOverlap.AddDynamic(this, &AARPGEffectActor::OnOverlap);
-	SphereComp->OnComponentEndOverlap.AddDynamic(this, &AARPGEffectActor::OnEndOverlap);
+
 }
 
-void AARPGEffectActor::OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
-	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void AARPGEffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGameplayEffect> GameplayEffect)
 {
+	UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
+	if (!TargetASC)
+		return;
 
-	//TODO: Change this to apply a GE. Using const_cast as a hack.
-	IAbilitySystemInterface* ASCInterface = Cast<IAbilitySystemInterface>(OtherActor);
-	if (ASCInterface)
-	{
-		const UARPGAttributeSet* AttSet = Cast<UARPGAttributeSet> (ASCInterface->GetAbilitySystemComponent()->GetAttributeSet(UARPGAttributeSet::StaticClass()));
-		UARPGAttributeSet* MutableAttSet = const_cast<UARPGAttributeSet*>(AttSet);
-		MutableAttSet->SetHealth(AttSet->GetHealth() + 25.0f);
-		MutableAttSet->SetMana(AttSet->GetMana() - 5.0f);
-		SetLifeSpan(0.1);
-	}
+	FGameplayEffectContextHandle EffectContextHandle = TargetASC->MakeEffectContext();
+	EffectContextHandle.AddSourceObject(this);
+	FGameplayEffectSpecHandle EffectSpecHandle = TargetASC->MakeOutgoingSpec(GameplayEffect, 1.0f, EffectContextHandle);
+	TargetASC->ApplyGameplayEffectSpecToTarget(*EffectSpecHandle.Data.Get(), TargetASC);
+	
 }
 
-void AARPGEffectActor::OnEndOverlap(UPrimitiveComponent* OverlappedComponent,
-	AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-{
-}
+
+
+

@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "ARPGEffectActor.generated.h"
 
+class UGameplayEffect;
 class USphereComponent;
 class UStaticMeshComponent;
 
@@ -18,19 +19,14 @@ public:
 	// Sets default values for this actor's properties
 	AARPGEffectActor();
 
-	UFUNCTION()
-	virtual void OnOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult); 
-	UFUNCTION()
-	virtual void OnEndOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	
-private:
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<USphereComponent> SphereComp;
 
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<UStaticMeshComponent> StaticMeshComp;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly,  Category = "Effects")
+	TSubclassOf<UGameplayEffect> GameplayEffectClass;
+
+	UFUNCTION(BlueprintCallable, Category = "Effects")
+	void ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGameplayEffect> GameplayEffect);
 };
