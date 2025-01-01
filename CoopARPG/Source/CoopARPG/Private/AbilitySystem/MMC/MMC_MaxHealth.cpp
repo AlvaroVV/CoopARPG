@@ -15,7 +15,6 @@ UMMC_MaxHealth::UMMC_MaxHealth()
 	RelevantAttributesToCapture.Add(VigorDef);
 }
 
-
 float UMMC_MaxHealth::CalculateBaseMagnitude_Implementation(const FGameplayEffectSpec& Spec) const
 {
 	//Gather tags from source and target
