@@ -23,7 +23,12 @@ void AARPGEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 	InteractableComp->RegisterInteractableMesh(Weapon);
+	InitAbilityActorInfo();
+}
 
+void AARPGEnemy::InitAbilityActorInfo()
+{
 	AbilitySystemComp->InitAbilityActorInfo(this,this);
+
 }
 

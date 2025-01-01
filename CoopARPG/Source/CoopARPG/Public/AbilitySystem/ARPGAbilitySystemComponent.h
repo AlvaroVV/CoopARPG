@@ -7,6 +7,7 @@
 
 #include "ARPGAbilitySystemComponent.generated.h"
 
+DECLARE_MULTICAST_DELEGATE_OneParam(FEffectAssetTags, const FGameplayTagContainer);
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class COOPARPG_API UARPGAbilitySystemComponent : public UAbilitySystemComponent
@@ -14,15 +15,16 @@ class COOPARPG_API UARPGAbilitySystemComponent : public UAbilitySystemComponent
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this component's properties
-	UARPGAbilitySystemComponent();
+	void AbilityActorInfoSet();
+
+	FEffectAssetTags OnEffectAssetTags;
 
 protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
-
-public:
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
-	                           FActorComponentTickFunction* ThisTickFunction) override;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attributes")
+	TArray<TSubclassOf<UGameplayEffect>> InitialAttributesValues;
+	
+	void InitializeAttributes();
+	
+	void EffectApplied(UAbilitySystemComponent* ASC, const FGameplayEffectSpec& Spec, FActiveGameplayEffectHandle ActiveGameplayEffectHandle) const;
+	
 };

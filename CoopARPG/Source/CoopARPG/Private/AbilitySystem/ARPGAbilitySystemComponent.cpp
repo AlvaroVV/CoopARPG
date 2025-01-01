@@ -4,33 +4,27 @@
 #include "AbilitySystem/ARPGAbilitySystemComponent.h"
 
 
-// Sets default values for this component's properties
-UARPGAbilitySystemComponent::UARPGAbilitySystemComponent()
+void UARPGAbilitySystemComponent::AbilityActorInfoSet()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
+	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UARPGAbilitySystemComponent::EffectApplied);
+	InitializeAttributes();
 }
 
-
-// Called when the game starts
-void UARPGAbilitySystemComponent::BeginPlay()
+void UARPGAbilitySystemComponent::InitializeAttributes()
 {
-	Super::BeginPlay();
-
-	// ...
-	
+	for (const TSubclassOf<UGameplayEffect> GEClass : InitialAttributesValues)
+	{
+		const FGameplayEffectContextHandle context =  MakeEffectContext();
+		const FGameplayEffectSpecHandle spec = MakeOutgoingSpec(GEClass, 1.0f, context);
+		ApplyGameplayEffectSpecToSelf(*spec.Data.Get());
+	}
 }
 
-
-// Called every frame
-void UARPGAbilitySystemComponent::TickComponent(float DeltaTime, ELevelTick TickType,
-                                                FActorComponentTickFunction* ThisTickFunction)
+void UARPGAbilitySystemComponent::EffectApplied(UAbilitySystemComponent* ASC, const FGameplayEffectSpec& Spec,
+                                                FActiveGameplayEffectHandle ActiveGameplayEffectHandle) const
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	FGameplayTagContainer Tags;
+	Spec.GetAllAssetTags(Tags);
 
-	// ...
+	OnEffectAssetTags.Broadcast(Tags);
 }
-

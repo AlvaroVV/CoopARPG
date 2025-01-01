@@ -4,13 +4,34 @@
 
 #include "CoreMinimal.h"
 #include "ARPGWidgetController.h"
+#include "GameplayTagContainer.h"
 #include "ARPGOverlayWidgetController.generated.h"
 
+class UARPGUserWidget;
+struct FGameplayTagContainer;
 struct FOnAttributeChangeData;
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealthChangedSignature, float, newHealth);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxHealthChangedSignature, float, newMaxHealth);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnManaChangedSignature, float, newMana);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxManathChangedSignature, float, newMaxMana);
+
+
+USTRUCT(BlueprintType)
+struct FUIMessageWidgetRow: public FTableRowBase
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FGameplayTag MessageTagID = FGameplayTag();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	FText MessageText = FText();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TSubclassOf<UARPGUserWidget> MessageWidget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UTexture2D* Image = nullptr;
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttributeChangeSignature, float, newValue);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMessageWidgetRowDelegate, FUIMessageWidgetRow, Row);
 
 /**
  * 
@@ -25,22 +46,28 @@ public:
 	virtual void BindCallbacksDependencies() override;
 
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attrbiutes")
-	FOnHealthChangedSignature OnHealthChanged;
+	FOnAttributeChangeSignature OnHealthChanged;
 	
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attrbiutes")
-	FOnMaxHealthChangedSignature OnMaxHealthChanged;
+	FOnAttributeChangeSignature OnMaxHealthChanged;
 
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attrbiutes")
-	FOnManaChangedSignature OnManaChanged;
+	FOnAttributeChangeSignature OnManaChanged;
 
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attrbiutes")
-	FOnMaxManathChangedSignature OnMaxManaChanged;
+	FOnAttributeChangeSignature OnMaxManaChanged;
+
+	UPROPERTY(BlueprintAssignable, Category="Overlay Widget")
+	FMessageWidgetRowDelegate MessageWidgetDelegate;
 
 protected:
-	void HealthChanged(const FOnAttributeChangeData& Data) const;
-	void MaxHealthChanged(const FOnAttributeChangeData& Data) const;
-	void ManaChanged(const FOnAttributeChangeData& Data) const;
-	void MaxManaChanged(const FOnAttributeChangeData& Data) const;
-};
+	
+	void OnEffectAssetTagsChanged(FGameplayTagContainer Tags) const;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="WidgetData")
+	TObjectPtr<UDataTable> MessageWidgetDataTable;
+
+	template<typename T>
+	T* GetDataTableRowByTag(const UDataTable* DataTable, const FGameplayTag Tag) const;
+};
 

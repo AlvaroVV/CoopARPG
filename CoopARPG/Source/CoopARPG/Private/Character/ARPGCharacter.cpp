@@ -2,6 +2,8 @@
 
 
 #include "Character/ARPGCharacter.h"
+
+#include "AbilitySystem/ARPGAbilitySystemComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 
@@ -44,6 +46,7 @@ void AARPGCharacter::PossessedBy(AController* NewController)
 
 	//Only called on Server already.
 	InitAbilityActorInfo();
+	//InitializeAttributes();
 	
 }
 
@@ -66,6 +69,7 @@ void AARPGCharacter::InitAbilityActorInfo()
 	AttributeSet = ARPGPlayerState->GetAttributeSet();
 
 	AbilitySystemComp->InitAbilityActorInfo(ARPGPlayerState, this);
+	Cast<UARPGAbilitySystemComponent>(AbilitySystemComp)->AbilityActorInfoSet();
 
 	//Check local player as the other clients dont have access to other controllers or HUDs
 	if (IsLocallyControlled())

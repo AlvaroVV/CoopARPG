@@ -25,6 +25,8 @@ private:
 	
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UInteractableComponent> InteractableComp;
+
+	virtual void InitAbilityActorInfo() override;
 	
 	
 };

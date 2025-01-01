@@ -3,6 +3,7 @@
 
 #include "UI/WidgetController/ARPGOverlayWidgetController.h"
 #include "AbilitySystemComponent.h"
+#include "AbilitySystem/ARPGAbilitySystemComponent.h"
 #include "AbilitySystem/ARPGAttributeSet.h"
 
 void UARPGOverlayWidgetController::BroadcastInitialValues()
@@ -20,35 +21,47 @@ void UARPGOverlayWidgetController::BindCallbacksDependencies()
 	//Super::BindCallbacksDependencies();
 	UARPGAttributeSet* ASet = CastChecked<UARPGAttributeSet>(AttributeSet);
 	AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(ASet->GetHealthAttribute())
-	.AddUObject(this, &UARPGOverlayWidgetController::HealthChanged);
+	.AddLambda(
+		[this](const FOnAttributeChangeData& Data){OnHealthChanged.Broadcast(Data.NewValue);}
+	);
 	
 	AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(ASet->GetMaxHealthAttribute())
-	.AddUObject(this, &UARPGOverlayWidgetController::MaxHealthChanged);
+	.AddLambda(
+		[this](const FOnAttributeChangeData& Data){OnMaxHealthChanged.Broadcast(Data.NewValue);}
+	);
 
 	AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(ASet->GetManaAttribute())
-	.AddUObject(this, &UARPGOverlayWidgetController::ManaChanged);
+	.AddLambda(
+		[this](const FOnAttributeChangeData& Data){OnManaChanged.Broadcast(Data.NewValue);}
+	);
 
 	AbilitySystemComp->GetGameplayAttributeValueChangeDelegate(ASet->GetMaxManaAttribute())
-	.AddUObject(this, &UARPGOverlayWidgetController::MaxManaChanged);
+	.AddLambda(
+		[this](const FOnAttributeChangeData& Data){OnMaxManaChanged.Broadcast(Data.NewValue);}
+	);
+	
+	Cast<UARPGAbilitySystemComponent>(AbilitySystemComp)->OnEffectAssetTags.AddUObject
+	(this, &UARPGOverlayWidgetController::OnEffectAssetTagsChanged);
 	
 }
 
-void UARPGOverlayWidgetController::HealthChanged(const FOnAttributeChangeData& Data) const
+void UARPGOverlayWidgetController::OnEffectAssetTagsChanged(FGameplayTagContainer Tags) const
 {
-	OnHealthChanged.Broadcast(Data.NewValue);
+	for (FGameplayTag Tag : Tags)
+	{
+		if (Tag.MatchesTag(FGameplayTag::RequestGameplayTag(FName("Message"))))
+		{
+			const FUIMessageWidgetRow* row = GetDataTableRowByTag<FUIMessageWidgetRow>(MessageWidgetDataTable, Tag);
+			if (row)
+				MessageWidgetDelegate.Broadcast(*row);
+		}
+		
+	}
 }
 
-void UARPGOverlayWidgetController::MaxHealthChanged(const FOnAttributeChangeData& Data) const
+template <typename T>
+T* UARPGOverlayWidgetController::GetDataTableRowByTag(const UDataTable* DataTable, const FGameplayTag Tag) const
 {
-	OnMaxHealthChanged.Broadcast(Data.NewValue);
+	return DataTable->FindRow<T>(Tag.GetTagName(), TEXT(""));
 }
 
-void UARPGOverlayWidgetController::ManaChanged(const FOnAttributeChangeData& Data) const
-{
-	OnManaChanged.Broadcast(Data.NewValue);
-}
-
-void UARPGOverlayWidgetController::MaxManaChanged(const FOnAttributeChangeData& Data) const
-{
-	OnMaxManaChanged.Broadcast(Data.NewValue);
-}

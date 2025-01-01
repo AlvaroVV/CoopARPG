@@ -23,3 +23,8 @@ void AARPGCharacterBase::BeginPlay()
 	Super::BeginPlay();
 	
 }
+
+
+void AARPGCharacterBase::InitAbilityActorInfo()
+{
+}
