@@ -10,6 +10,7 @@
 
 class UAbilitySystemComponent;
 class UAttributeSet;
+class UCombatComponent;
 
 UCLASS(Abstract)
 class COOPARPG_API AARPGCharacterBase : public ACharacter, public IAbilitySystemInterface
@@ -28,6 +29,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = Combat)
 	TObjectPtr<USkeletalMeshComponent> Weapon;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UCombatComponent> CombatComp;
 
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComp;

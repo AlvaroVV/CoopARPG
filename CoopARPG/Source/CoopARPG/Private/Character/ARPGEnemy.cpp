@@ -5,6 +5,7 @@
 
 #include "AbilitySystem/ARPGAbilitySystemComponent.h"
 #include "AbilitySystem/ARPGAttributeSet.h"
+#include "Combat/CombatComponent.h"
 #include "Interaction/InteractableComponent.h"
 
 
@@ -17,6 +18,9 @@ AARPGEnemy::AARPGEnemy()
 	AbilitySystemComp->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
 
 	AttributeSet = CreateDefaultSubobject<UARPGAttributeSet>(FName("AttributeSet"));
+
+	CombatComp = CreateDefaultSubobject<UCombatComponent>(TEXT("CombatComponent"));
+	CombatComp->SetIsReplicated(true);
 }
 
 void AARPGEnemy::BeginPlay()

@@ -5,6 +5,8 @@
 
 #include "AbilitySystem/ARPGAbilitySystemComponent.h"
 #include "AbilitySystem/ARPGAttributeSet.h"
+#include "Combat/CombatComponent.h"
+#include "Net/UnrealNetwork.h"
 
 AARPGPlayerState::AARPGPlayerState()
 {
@@ -13,6 +15,9 @@ AARPGPlayerState::AARPGPlayerState()
 	AbilitySystemComp->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 
 	AttributeSet = CreateDefaultSubobject<UARPGAttributeSet>(FName("AttributeSet"));
+
+	CombatComp = CreateDefaultSubobject<UCombatComponent>(TEXT("CombatComponent"));
+	CombatComp->SetIsReplicated(true);
 	
 	SetNetUpdateFrequency(100.0f);
 }

@@ -14,7 +14,8 @@ void UARPGAbilitySystemComponent::InitializeAttributes()
 {
 	for (const TSubclassOf<UGameplayEffect> GEClass : InitialAttributesValues)
 	{
-		const FGameplayEffectContextHandle context =  MakeEffectContext();
+		FGameplayEffectContextHandle context =  MakeEffectContext();
+		context.AddSourceObject(GetOwnerActor());
 		const FGameplayEffectSpecHandle spec = MakeOutgoingSpec(GEClass, 1.0f, context);
 		ApplyGameplayEffectSpecToSelf(*spec.Data.Get());
 	}

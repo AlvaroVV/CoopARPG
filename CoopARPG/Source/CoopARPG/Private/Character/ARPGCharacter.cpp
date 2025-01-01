@@ -67,7 +67,8 @@ void AARPGCharacter::InitAbilityActorInfo()
 	check(ARPGPlayerState);
 	AbilitySystemComp = ARPGPlayerState->GetAbilitySystemComponent();
 	AttributeSet = ARPGPlayerState->GetAttributeSet();
-
+	CombatComp = ARPGPlayerState->GetCombatComponent();
+	
 	AbilitySystemComp->InitAbilityActorInfo(ARPGPlayerState, this);
 	Cast<UARPGAbilitySystemComponent>(AbilitySystemComp)->AbilityActorInfoSet();
 

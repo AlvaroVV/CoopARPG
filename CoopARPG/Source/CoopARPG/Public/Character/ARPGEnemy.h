@@ -7,6 +7,7 @@
 #include "Interaction/InteractableInterface.h"
 #include "ARPGEnemy.generated.h"
 
+class UCombatComponent;
 class UInteractableComponent;
 
 
@@ -21,12 +22,11 @@ public:
 	
 	virtual void BeginPlay() override;
 	
-private:
+protected:
 	
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UInteractableComponent> InteractableComp;
 
 	virtual void InitAbilityActorInfo() override;
-	
 	
 };

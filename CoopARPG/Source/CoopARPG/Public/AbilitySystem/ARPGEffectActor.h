@@ -10,6 +10,15 @@ class UGameplayEffect;
 class USphereComponent;
 class UStaticMeshComponent;
 
+UENUM(BlueprintType)
+enum class EEffectApplicationPolicy: uint8
+{
+	ApplyOnOverlap,
+	ApplyOnEndOverlap,
+	ApplyOnBoth,
+	DoNotApply
+};
+
 UCLASS()
 class COOPARPG_API AARPGEffectActor : public AActor
 {
@@ -29,4 +38,7 @@ protected:
 
 	UFUNCTION(BlueprintCallable, Category = "Effects")
 	void ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGameplayEffect> GameplayEffect);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Effects")
+	EEffectApplicationPolicy ApplicationPolicy;
 };
