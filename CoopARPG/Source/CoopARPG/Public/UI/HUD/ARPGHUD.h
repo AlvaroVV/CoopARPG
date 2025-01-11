@@ -7,7 +7,7 @@
 #include "ARPGHUD.generated.h"
 
 struct FWidgetControllerParams;
-class UARPGOverlayWidgetController;
+class UOverlayWidgetController;
 class UARPGUserWidget;
 class UAbilitySystemComponent;
 class UAttributeSet;
@@ -23,7 +23,7 @@ class COOPARPG_API AARPGHUD : public AHUD
 public:
 
 
-	UARPGOverlayWidgetController* GetOverlayWidgetController(const FWidgetControllerParams& WidgetControllerParams);
+	UOverlayWidgetController* GetOverlayWidgetController(const FWidgetControllerParams& WidgetControllerParams);
 
 	void InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* Asc, UAttributeSet* Aset);
 	
@@ -36,8 +36,8 @@ private:
 	TSubclassOf<UARPGUserWidget> OverlayWidgetClass;
 
 	UPROPERTY()
-	TObjectPtr<UARPGOverlayWidgetController> OverlayWidgetController;
+	TObjectPtr<UOverlayWidgetController> OverlayWidgetController;
 
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<UARPGOverlayWidgetController> OverlayWidgetControllerClass;
+	TSubclassOf<UOverlayWidgetController> OverlayWidgetControllerClass;
 };

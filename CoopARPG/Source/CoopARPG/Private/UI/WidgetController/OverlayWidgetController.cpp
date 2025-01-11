@@ -1,12 +1,12 @@
 ﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "UI/WidgetController/ARPGOverlayWidgetController.h"
+#include "UI/WidgetController/OverlayWidgetController.h"
 #include "AbilitySystemComponent.h"
 #include "AbilitySystem/ARPGAbilitySystemComponent.h"
 #include "AbilitySystem/ARPGAttributeSet.h"
 
-void UARPGOverlayWidgetController::BroadcastInitialValues()
+void UOverlayWidgetController::BroadcastInitialValues()
 {
 	//Super::BroadcastInitialValues();
 	UARPGAttributeSet* ASet = CastChecked<UARPGAttributeSet>(AttributeSet);
@@ -16,7 +16,7 @@ void UARPGOverlayWidgetController::BroadcastInitialValues()
 	OnMaxManaChanged.Broadcast(ASet->GetMaxMana());
 }
 
-void UARPGOverlayWidgetController::BindCallbacksDependencies()
+void UOverlayWidgetController::BindCallbacksDependencies()
 {
 	//Super::BindCallbacksDependencies();
 	UARPGAttributeSet* ASet = CastChecked<UARPGAttributeSet>(AttributeSet);
@@ -41,11 +41,11 @@ void UARPGOverlayWidgetController::BindCallbacksDependencies()
 	);
 	
 	Cast<UARPGAbilitySystemComponent>(AbilitySystemComp)->OnEffectAssetTags.AddUObject
-	(this, &UARPGOverlayWidgetController::OnEffectAssetTagsChanged);
+	(this, &UOverlayWidgetController::OnEffectAssetTagsChanged);
 	
 }
 
-void UARPGOverlayWidgetController::OnEffectAssetTagsChanged(FGameplayTagContainer Tags) const
+void UOverlayWidgetController::OnEffectAssetTagsChanged(FGameplayTagContainer Tags) const
 {
 	for (FGameplayTag Tag : Tags)
 	{
@@ -60,7 +60,7 @@ void UARPGOverlayWidgetController::OnEffectAssetTagsChanged(FGameplayTagContaine
 }
 
 template <typename T>
-T* UARPGOverlayWidgetController::GetDataTableRowByTag(const UDataTable* DataTable, const FGameplayTag Tag) const
+T* UOverlayWidgetController::GetDataTableRowByTag(const UDataTable* DataTable, const FGameplayTag Tag) const
 {
 	return DataTable->FindRow<T>(Tag.GetTagName(), TEXT(""));
 }

@@ -3,15 +3,15 @@
 
 #include "UI/HUD/ARPGHUD.h"
 #include "UI/Widget/ARPGUserWidget.h"
-#include "UI/WidgetController/ARPGOverlayWidgetController.h"
+#include "UI/WidgetController/OverlayWidgetController.h"
 
 
-UARPGOverlayWidgetController* AARPGHUD::GetOverlayWidgetController(
+UOverlayWidgetController* AARPGHUD::GetOverlayWidgetController(
 	const FWidgetControllerParams& WidgetControllerParams)
 {
 	if (OverlayWidgetController == nullptr)
 	{
-		OverlayWidgetController = NewObject<UARPGOverlayWidgetController>(this, OverlayWidgetControllerClass);
+		OverlayWidgetController = NewObject<UOverlayWidgetController>(this, OverlayWidgetControllerClass);
 		OverlayWidgetController->SetWidgetControllerParams(WidgetControllerParams);
 		OverlayWidgetController->BindCallbacksDependencies();
 	}
@@ -27,7 +27,7 @@ void AARPGHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySyst
 	OverlayWidget = static_cast<UARPGUserWidget*>(CreateWidget<UUserWidget>(GetWorld(), OverlayWidgetClass));
 
 	const FWidgetControllerParams widgetControllerParams(PC, PS, Asc, Aset);
-	UARPGOverlayWidgetController* widgetController = GetOverlayWidgetController(widgetControllerParams);
+	UOverlayWidgetController* widgetController = GetOverlayWidgetController(widgetControllerParams);
 
 	OverlayWidget->SetWidgetController(widgetController);
 	widgetController->BroadcastInitialValues();

@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "ARPGWidgetController.h"
 #include "GameplayTagContainer.h"
-#include "ARPGOverlayWidgetController.generated.h"
+#include "OverlayWidgetController.generated.h"
 
 class UARPGUserWidget;
 struct FGameplayTagContainer;
@@ -37,7 +37,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMessageWidgetRowDelegate, FUIMessag
  * 
  */
 UCLASS(Blueprintable, BlueprintType)
-class COOPARPG_API UARPGOverlayWidgetController : public UARPGWidgetController
+class COOPARPG_API UOverlayWidgetController : public UARPGWidgetController
 {
 	GENERATED_BODY()
 
