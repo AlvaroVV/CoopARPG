@@ -23,3 +23,20 @@ UOverlayWidgetController* UARPGBlueprintFunctionLibrary::GetOverlayWidgetControl
 	}
 	return nullptr;
 }
+
+UAttributeMenuWidgetController* UARPGBlueprintFunctionLibrary::GetAttributeMenuWidgetController(
+	const UObject* WorldContextObject)
+{
+	if (APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject, 0))
+	{
+		if (AARPGHUD* ARPGHud = Cast<AARPGHUD>(PC->GetHUD()))
+		{
+			AARPGPlayerState* PS = PC->GetPlayerState<AARPGPlayerState>();
+			UAbilitySystemComponent* ASC = PS->GetAbilitySystemComponent();
+			UAttributeSet* AS = PS->GetAttributeSet();
+			const FWidgetControllerParams WidgetControllerParams = FWidgetControllerParams(PC, PS, ASC, AS);
+			return ARPGHud->GetAttributeMenuWidgetController(WidgetControllerParams);
+		}
+	}
+	return nullptr;
+}

@@ -3,9 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AttributeSet.h"
 #include "GameplayTagContainer.h"
 #include "Engine/DataAsset.h"
-#include "AttributeInfo.generated.h"
+#include "AttributesInfoData.generated.h"
 
 
 USTRUCT(BlueprintType)
@@ -24,20 +25,23 @@ struct FARPGAttributeInfo
 
 	UPROPERTY(BlueprintReadOnly)
 	float AttributeValue = 0.f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	FGameplayAttribute GameplayAttribute;
 };
 
 /**
  * 
  */
 UCLASS()
-class COOPARPG_API UAttributeInfo : public UDataAsset
+class COOPARPG_API UAttributesInfoData : public UDataAsset
 {
 	GENERATED_BODY()
 	
 public:
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TArray <FARPGAttributeInfo> AttributeInformation;
-
+	TArray <FARPGAttributeInfo> AttributesInformation;
+	
 	FARPGAttributeInfo FindAttributeInfoForTag(const FGameplayTag& AttributeTag, bool bLogNotFound = false);
 };

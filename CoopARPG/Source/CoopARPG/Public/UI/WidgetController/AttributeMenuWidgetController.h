@@ -6,16 +6,30 @@
 #include "ARPGWidgetController.h"
 #include "AttributeMenuWidgetController.generated.h"
 
+class UAttributesInfoData;
+struct FARPGAttributeInfo;
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAttributeInfoSignature, const FARPGAttributeInfo&, AttributeInfo);
+
 /**
  * 
  */
-UCLASS()
+UCLASS(BlueprintType, Blueprintable)
 class COOPARPG_API UAttributeMenuWidgetController : public UARPGWidgetController
 {
 	GENERATED_BODY()
 
 public:
-
+	
 	virtual void BroadcastInitialValues() override;
 	virtual void BindCallbacksDependencies() override;
+
+	UPROPERTY(BlueprintAssignable, Category = "GAS|Attributes")
+	FAttributeInfoSignature AttributeInfoDelegate;
+
+protected:
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	TObjectPtr<UAttributesInfoData> AttributesInfoData;
+	
 };

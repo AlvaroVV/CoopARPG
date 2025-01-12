@@ -13,6 +13,8 @@
 	GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
 	GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
 
+DECLARE_DELEGATE_RetVal(FGameplayAttribute, FGetAttributeSignature);
+
 USTRUCT(BlueprintType)
 struct FEffectProperties
 {
@@ -56,6 +58,8 @@ public:
 	virtual void PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue) override;
 	virtual void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data) override;
 
+	//TMap<FGameplayTag, FGetAttributeSignature> TagsToAttributes;
+	
 	/*
 	 * VITAL ATTRIBUTES
 	 */
@@ -64,7 +68,7 @@ public:
 	UPROPERTY(ReplicatedUsing = OnRep_Health, BlueprintReadOnly, Category = "Base Attributes")
 	FGameplayAttributeData Health;
 	ATTRIBUTE_ACCESSORS(UARPGAttributeSet, Health);
-
+	 
 	UPROPERTY(ReplicatedUsing = OnRep_MaxHealth, BlueprintReadOnly, Category = "Base Attributes")
 	FGameplayAttributeData MaxHealth;
 	ATTRIBUTE_ACCESSORS(UARPGAttributeSet, MaxHealth);

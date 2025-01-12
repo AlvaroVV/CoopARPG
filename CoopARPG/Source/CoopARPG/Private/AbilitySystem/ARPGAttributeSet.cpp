@@ -5,12 +5,19 @@
 
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
+#include "ARPGGameplayTags.h"
 #include "GameplayEffectExtension.h"
 #include "GameFramework/Character.h"
 #include "Net/UnrealNetwork.h"
 
 UARPGAttributeSet::UARPGAttributeSet()
 {
+	const FARPGGameplayTags& GameplayTags = FARPGGameplayTags::Get();
+	
+	//FGetAttributeSignature GetStrengthDelegate;
+	//GetStrengthDelegate.BindStatic(GetStrengthAttribute);
+	//TagsToAttributes.Add(GameplayTags.Attributes_Primary_Strength, GetStrengthDelegate);
+
 
 }
 

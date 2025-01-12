@@ -6,6 +6,7 @@
 #include "GameFramework/HUD.h"
 #include "ARPGHUD.generated.h"
 
+class UAttributeMenuWidgetController;
 struct FWidgetControllerParams;
 class UOverlayWidgetController;
 class UARPGUserWidget;
@@ -24,7 +25,8 @@ public:
 
 
 	UOverlayWidgetController* GetOverlayWidgetController(const FWidgetControllerParams& WidgetControllerParams);
-
+	UAttributeMenuWidgetController* GetAttributeMenuWidgetController(const FWidgetControllerParams& WidgetControllerParams);
+	
 	void InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* Asc, UAttributeSet* Aset);
 	
 private:
@@ -40,4 +42,10 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UOverlayWidgetController> OverlayWidgetControllerClass;
+
+	UPROPERTY()
+	TObjectPtr<UAttributeMenuWidgetController> AttributeMenuWidgetController;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UAttributeMenuWidgetController> AttributeMenuWidgetControllerClass;
 };

@@ -1,13 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "AbilitySystem/Data/AttributeInfo.h"
+#include "AbilitySystem/Data/AttributesInfoData.h"
 
 #include "ARPGGameplayTags.h"
 
-FARPGAttributeInfo UAttributeInfo::FindAttributeInfoForTag(const FGameplayTag& AttributeTag, bool bLogNotFound)
+FARPGAttributeInfo UAttributesInfoData::FindAttributeInfoForTag(const FGameplayTag& AttributeTag, bool bLogNotFound)
 {
-	for (FARPGAttributeInfo info : AttributeInformation )
+	for (FARPGAttributeInfo info : AttributesInformation )
 	{
 		if (info.AttributeTag == AttributeTag)
 		{
