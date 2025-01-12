@@ -8,6 +8,7 @@
 #include "GameFramework/Character.h"
 #include "ARPGCharacterBase.generated.h"
 
+class UARPGGameplayAbilityBase;
 class UAbilitySystemComponent;
 class UAttributeSet;
 class UCombatComponent;
@@ -25,8 +26,6 @@ public:
 	UAttributeSet* GetAttributeSet() const {return AttributeSet;} 
 	
 protected:
-	virtual void BeginPlay() override;
-
 	UPROPERTY(EditAnywhere, Category = Combat)
 	TObjectPtr<USkeletalMeshComponent> Weapon;
 
@@ -41,5 +40,6 @@ protected:
 
 private:
 	virtual void InitAbilityActorInfo();
+	
 
 };

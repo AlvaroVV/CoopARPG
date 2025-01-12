@@ -6,18 +6,36 @@
 
 void UARPGAbilitySystemComponent::AbilityActorInfoSet()
 {
-	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UARPGAbilitySystemComponent::EffectApplied);
 	InitializeAttributes();
+	InitializeGameplayAbilities();
+	
+	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UARPGAbilitySystemComponent::EffectApplied);
 }
 
 void UARPGAbilitySystemComponent::InitializeAttributes()
 {
+	if (GetOwnerRole() != ROLE_Authority)
+		return;
+	
 	for (const TSubclassOf<UGameplayEffect> GEClass : InitialAttributesValues)
 	{
 		FGameplayEffectContextHandle context =  MakeEffectContext();
 		context.AddSourceObject(GetOwnerActor());
 		const FGameplayEffectSpecHandle spec = MakeOutgoingSpec(GEClass, 1.0f, context);
 		ApplyGameplayEffectSpecToSelf(*spec.Data.Get());
+	}
+}
+
+void UARPGAbilitySystemComponent::InitializeGameplayAbilities()
+{
+	if (GetOwnerRole() != ROLE_Authority)
+		return;
+	
+	for (TSubclassOf<UGameplayAbility> abilityClass : InitialGameplayAbilities)
+	{
+		FGameplayAbilitySpec abilitySpec = FGameplayAbilitySpec(abilityClass, 1);
+		//GiveAbility(abilitySpec);
+		GiveAbilityAndActivateOnce(abilitySpec);
 	}
 }
 

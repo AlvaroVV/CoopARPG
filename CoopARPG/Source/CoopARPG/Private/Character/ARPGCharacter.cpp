@@ -46,7 +46,6 @@ void AARPGCharacter::PossessedBy(AController* NewController)
 
 	//Only called on Server already.
 	InitAbilityActorInfo();
-	//InitializeAttributes();
 	
 }
 
@@ -65,6 +64,7 @@ void AARPGCharacter::InitAbilityActorInfo()
 {
 	AARPGPlayerState* ARPGPlayerState = GetPlayerState<AARPGPlayerState>();
 	check(ARPGPlayerState);
+	
 	AbilitySystemComp = ARPGPlayerState->GetAbilitySystemComponent();
 	AttributeSet = ARPGPlayerState->GetAttributeSet();
 	CombatComp = ARPGPlayerState->GetCombatComponent();

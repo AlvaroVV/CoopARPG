@@ -22,8 +22,12 @@ public:
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attributes")
 	TArray<TSubclassOf<UGameplayEffect>> InitialAttributesValues;
+
+	UPROPERTY(EditAnywhere, Category = "Abilities")
+	TArray<TSubclassOf<UGameplayAbility>> InitialGameplayAbilities;
 	
 	void InitializeAttributes();
+	void InitializeGameplayAbilities();
 	
 	void EffectApplied(UAbilitySystemComponent* ASC, const FGameplayEffectSpec& Spec, FActiveGameplayEffectHandle ActiveGameplayEffectHandle) const;
 	
