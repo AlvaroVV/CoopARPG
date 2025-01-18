@@ -32,6 +32,13 @@ struct FARPGGameplayTags
 
 	FGameplayTag Attributes_Secondary_MaxHealth;
 	FGameplayTag Attributes_Secondary_MaxMana;
+
+	FGameplayTag InputTag_Action_Primary;
+	FGameplayTag InputTag_Action_Secondary;
+	FGameplayTag InputTag_Skill_1;
+	FGameplayTag InputTag_Skill_2;
+	FGameplayTag InputTag_Skill_3;
+	FGameplayTag InputTag_Skill_4;
 	
 private:
 	static FARPGGameplayTags GameplayTags;

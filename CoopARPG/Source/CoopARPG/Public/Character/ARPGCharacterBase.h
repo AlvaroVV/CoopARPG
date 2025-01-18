@@ -21,7 +21,7 @@ class COOPARPG_API AARPGCharacterBase : public ACharacter, public IAbilitySystem
 public:
 	
 	AARPGCharacterBase();
-
+	
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const {return AttributeSet;} 
 	

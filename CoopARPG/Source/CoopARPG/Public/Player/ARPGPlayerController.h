@@ -3,9 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
 #include "GameFramework/PlayerController.h"
 #include "ARPGPlayerController.generated.h"
 
+class UARPGInputConfigData;
 class UInputMappingContext;
 class UInputAction;
 //class IInteractableInterface;
@@ -34,11 +36,16 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputAction> MoveAction;
 
+	UPROPERTY(EditAnywhere, Category = "Input")
+	TObjectPtr<UARPGInputConfigData> InputConfigData;
+
 	void Move(const FInputActionValue& InputActionValue);
+	void AbilityInputPressed(FGameplayTag GameplayTag);
+	void AbilityInputReleased(FGameplayTag GameplayTag);
+	void AbilityInputHeld(FGameplayTag GameplayTag);
 	
 	void CursorTrace();
 
 	TWeakObjectPtr<UInteractableComponent> LastActorIntComp;
 	TWeakObjectPtr<UInteractableComponent> CurrentActorIntComp;
 };
-

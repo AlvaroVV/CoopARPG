@@ -13,4 +13,8 @@ UCLASS()
 class COOPARPG_API UARPGGameplayAbilityBase : public UGameplayAbility
 {
 	GENERATED_BODY()
+	
+public:
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	FGameplayTag StartupInputTag;
 };

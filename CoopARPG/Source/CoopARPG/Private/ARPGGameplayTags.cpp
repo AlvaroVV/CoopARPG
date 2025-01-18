@@ -52,5 +52,26 @@ void FARPGGameplayTags::InitializeNativeGameplayTags()
 
 	GameplayTags.Attributes_Secondary_MaxMana = UGameplayTagsManager::Get()
 	.AddNativeGameplayTag(FName("Attributes.Secondary.MaxMana"), FString("Maximum of Mana"));
-	
+
+	/*
+	 * INPUT TAGS
+	 */
+
+	GameplayTags.InputTag_Action_Primary = UGameplayTagsManager::Get()
+	.AddNativeGameplayTag(FName("Input.Action.Primary"), FString("Input tag for the Primary Action"));
+
+	GameplayTags.InputTag_Action_Secondary = UGameplayTagsManager::Get()
+	.AddNativeGameplayTag(FName("Input.Action.Secondary"), FString("Input tag for the Secondary Action"));
+
+	GameplayTags.InputTag_Skill_1 = UGameplayTagsManager::Get()
+	.AddNativeGameplayTag(FName("Input.Skill.1"), FString("Input tag for the Skill1 Action"));
+
+	GameplayTags.InputTag_Skill_2 = UGameplayTagsManager::Get()
+	.AddNativeGameplayTag(FName("Input.Skill.2"), FString("Input tag for the Skill2 Action"));
+
+	GameplayTags.InputTag_Skill_3 = UGameplayTagsManager::Get()
+	.AddNativeGameplayTag(FName("Input.Skill.3"), FString("Input tag for the Skill3 Action"));
+
+	GameplayTags.InputTag_Skill_4 = UGameplayTagsManager::Get()
+	.AddNativeGameplayTag(FName("Input.Skill.4"), FString("Input tag for the Skill4 Action"));
 }

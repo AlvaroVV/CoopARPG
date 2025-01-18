@@ -3,7 +3,8 @@
 
 #include "Player/ARPGPlayerController.h"
 #include "EnhancedInputSubsystems.h"
-#include "EnhancedInputComponent.h"
+#include "BaseBehaviors/BehaviorTargetInterfaces.h"
+#include "Input/ARPGInputComponent.h"
 #include "Interaction/InteractableComponent.h"
 
 AARPGPlayerController::AARPGPlayerController()
@@ -43,9 +44,10 @@ void AARPGPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
 
-	UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent);
-
-	EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AARPGPlayerController::Move);
+	UARPGInputComponent* ARPGInputComponent = CastChecked<UARPGInputComponent>(InputComponent);
+	
+	ARPGInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AARPGPlayerController::Move);
+	ARPGInputComponent->BindAbilityActions(InputConfigData, this, &ThisClass::AbilityInputPressed, &ThisClass::AbilityInputReleased, &ThisClass::AbilityInputHeld);
 }
 
 void AARPGPlayerController::Move(const FInputActionValue& InputActionValue)
@@ -63,6 +65,22 @@ void AARPGPlayerController::Move(const FInputActionValue& InputActionValue)
 		ControlledPawn->AddMovementInput(ForwardDirection, InputAxisVector.Y);
 		ControlledPawn->AddMovementInput(RightDirection, InputAxisVector.X);
 	}
+}
+
+
+void AARPGPlayerController::AbilityInputPressed(FGameplayTag GameplayTag)
+{
+	GEngine->AddOnScreenDebugMessage(1, 3.0f, FColor::Red, *GameplayTag.ToString());
+}
+
+void AARPGPlayerController::AbilityInputReleased(FGameplayTag GameplayTag)
+{
+	GEngine->AddOnScreenDebugMessage(2, 3.0f, FColor::Blue, *GameplayTag.ToString());
+}
+
+void AARPGPlayerController::AbilityInputHeld(FGameplayTag GameplayTag)
+{
+	GEngine->AddOnScreenDebugMessage(3, 0.1f, FColor::Green, *GameplayTag.ToString());
 }
 
 

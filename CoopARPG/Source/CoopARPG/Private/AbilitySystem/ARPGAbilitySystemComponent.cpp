@@ -31,10 +31,11 @@ void UARPGAbilitySystemComponent::InitializeGameplayAbilities()
 	if (GetOwnerRole() != ROLE_Authority)
 		return;
 	
-	for (TSubclassOf<UGameplayAbility> abilityClass : InitialGameplayAbilities)
+	for (TSubclassOf<UGameplayAbility> abilityClass : StartupGameplayAbilities)
 	{
 		FGameplayAbilitySpec abilitySpec = FGameplayAbilitySpec(abilityClass, 1);
-		//GiveAbility(abilitySpec);
+		//abilitySpec.DynamicAbilityTags.AddTag(abilitySpec.Ability)
+		GiveAbility(abilitySpec);
 		GiveAbilityAndActivateOnce(abilitySpec);
 	}
 }

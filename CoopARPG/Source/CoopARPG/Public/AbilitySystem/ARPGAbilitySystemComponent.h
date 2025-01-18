@@ -24,7 +24,7 @@ protected:
 	TArray<TSubclassOf<UGameplayEffect>> InitialAttributesValues;
 
 	UPROPERTY(EditAnywhere, Category = "Abilities")
-	TArray<TSubclassOf<UGameplayAbility>> InitialGameplayAbilities;
+	TArray<TSubclassOf<UGameplayAbility>> StartupGameplayAbilities;
 	
 	void InitializeAttributes();
 	void InitializeGameplayAbilities();
