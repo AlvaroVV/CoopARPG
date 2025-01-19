@@ -6,7 +6,7 @@
 #include "ARPGWidgetController.h"
 #include "AttributeMenuWidgetController.generated.h"
 
-class UAttributesInfoData;
+class UARPGAttributesInfoData;
 struct FARPGAttributeInfo;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FAttributeInfoSignature, const FARPGAttributeInfo&, AttributeInfo);
@@ -30,6 +30,6 @@ public:
 protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
-	TObjectPtr<UAttributesInfoData> AttributesInfoData;
+	TObjectPtr<UARPGAttributesInfoData> AttributesInfoData;
 	
 };

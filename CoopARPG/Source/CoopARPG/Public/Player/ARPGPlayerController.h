@@ -7,10 +7,10 @@
 #include "GameFramework/PlayerController.h"
 #include "ARPGPlayerController.generated.h"
 
+class UARPGAbilitySystemComponent;
 class UARPGInputConfigData;
 class UInputMappingContext;
 class UInputAction;
-//class IInteractableInterface;
 class UInteractableComponent;
 
 struct FInputActionValue;
@@ -39,6 +39,9 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UARPGInputConfigData> InputConfigData;
 
+	UPROPERTY()
+	TObjectPtr<UARPGAbilitySystemComponent> ARPGAbilitySystemComp;
+
 	void Move(const FInputActionValue& InputActionValue);
 	void AbilityInputPressed(FGameplayTag GameplayTag);
 	void AbilityInputReleased(FGameplayTag GameplayTag);
@@ -48,4 +51,6 @@ private:
 
 	TWeakObjectPtr<UInteractableComponent> LastActorIntComp;
 	TWeakObjectPtr<UInteractableComponent> CurrentActorIntComp;
+
+	UARPGAbilitySystemComponent* GetARPGAbilitySystemComp();
 };

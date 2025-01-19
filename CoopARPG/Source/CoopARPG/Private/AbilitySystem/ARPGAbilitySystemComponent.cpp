@@ -3,6 +3,8 @@
 
 #include "AbilitySystem/ARPGAbilitySystemComponent.h"
 
+#include "AbilitySystem/Data/ARPGAbilitiesInfoData.h"
+
 
 void UARPGAbilitySystemComponent::AbilityActorInfoSet()
 {
@@ -10,6 +12,37 @@ void UARPGAbilitySystemComponent::AbilityActorInfoSet()
 	InitializeGameplayAbilities();
 	
 	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UARPGAbilitySystemComponent::EffectApplied);
+}
+
+void UARPGAbilitySystemComponent::AbilityInputTagHeld(const FGameplayTag& Tag)
+{
+	if (!Tag.IsValid())
+		return;
+
+	for (FGameplayAbilitySpec& Ability: GetActivatableAbilities())
+	{
+		if (Ability.GetDynamicSpecSourceTags().HasTagExact(Tag))
+		{
+			AbilitySpecInputPressed(Ability);
+			if (!Ability.IsActive())
+				TryActivateAbility(Ability.Handle);
+		}
+	}
+}
+
+void UARPGAbilitySystemComponent::AbilityInputTagReleased(const FGameplayTag& Tag)
+{
+	if (!Tag.IsValid())
+		return;
+
+	for (FGameplayAbilitySpec& Ability: GetActivatableAbilities())
+	{
+		if (Ability.GetDynamicSpecSourceTags().HasTagExact(Tag))
+		{
+			AbilitySpecInputReleased(Ability);
+			
+		}
+	}
 }
 
 void UARPGAbilitySystemComponent::InitializeAttributes()
@@ -30,13 +63,15 @@ void UARPGAbilitySystemComponent::InitializeGameplayAbilities()
 {
 	if (GetOwnerRole() != ROLE_Authority)
 		return;
+
+	if (AbilitiesInfoData == nullptr)
+		return;
 	
-	for (TSubclassOf<UGameplayAbility> abilityClass : StartupGameplayAbilities)
+	for (FARPGAbilityInfoData& abilityInfo : AbilitiesInfoData->GetAbilities())
 	{
-		FGameplayAbilitySpec abilitySpec = FGameplayAbilitySpec(abilityClass, 1);
-		//abilitySpec.DynamicAbilityTags.AddTag(abilitySpec.Ability)
+		FGameplayAbilitySpec abilitySpec = FGameplayAbilitySpec(abilityInfo.AbilityClass, abilityInfo.AbilityLevel);
+		abilitySpec.GetDynamicSpecSourceTags().AddTag(abilityInfo.InputActionTag);
 		GiveAbility(abilitySpec);
-		GiveAbilityAndActivateOnce(abilitySpec);
 	}
 }
 

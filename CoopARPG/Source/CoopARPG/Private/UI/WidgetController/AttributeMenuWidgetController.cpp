@@ -5,7 +5,7 @@
 
 #include "AttributeSet.h"
 #include "AbilitySystem/ARPGAttributeSet.h"
-#include "AbilitySystem/Data/AttributesInfoData.h"
+#include "AbilitySystem/Data/ARPGAttributesInfoData.h"
 #include "ARPGGameplayTags.h"
 
 void UAttributeMenuWidgetController::BroadcastInitialValues()

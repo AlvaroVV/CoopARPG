@@ -6,7 +6,7 @@
 #include "AttributeSet.h"
 #include "GameplayTagContainer.h"
 #include "Engine/DataAsset.h"
-#include "AttributesInfoData.generated.h"
+#include "ARPGAttributesInfoData.generated.h"
 
 
 USTRUCT(BlueprintType)
@@ -34,7 +34,7 @@ struct FARPGAttributeInfo
  * 
  */
 UCLASS()
-class COOPARPG_API UAttributesInfoData : public UDataAsset
+class COOPARPG_API UARPGAttributesInfoData : public UDataAsset
 {
 	GENERATED_BODY()
 	

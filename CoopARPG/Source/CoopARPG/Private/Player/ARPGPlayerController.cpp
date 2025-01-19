@@ -2,7 +2,10 @@
 
 
 #include "Player/ARPGPlayerController.h"
+
+#include "AbilitySystemBlueprintLibrary.h"
 #include "EnhancedInputSubsystems.h"
+#include "AbilitySystem/ARPGAbilitySystemComponent.h"
 #include "BaseBehaviors/BehaviorTargetInterfaces.h"
 #include "Input/ARPGInputComponent.h"
 #include "Interaction/InteractableComponent.h"
@@ -76,11 +79,15 @@ void AARPGPlayerController::AbilityInputPressed(FGameplayTag GameplayTag)
 void AARPGPlayerController::AbilityInputReleased(FGameplayTag GameplayTag)
 {
 	GEngine->AddOnScreenDebugMessage(2, 3.0f, FColor::Blue, *GameplayTag.ToString());
+	if (GetARPGAbilitySystemComp() != nullptr)
+		GetARPGAbilitySystemComp()->AbilityInputTagReleased(GameplayTag);
 }
 
 void AARPGPlayerController::AbilityInputHeld(FGameplayTag GameplayTag)
 {
 	GEngine->AddOnScreenDebugMessage(3, 0.1f, FColor::Green, *GameplayTag.ToString());
+	if (GetARPGAbilitySystemComp() != nullptr)
+		GetARPGAbilitySystemComp()->AbilityInputTagHeld(GameplayTag);
 }
 
 
@@ -131,4 +138,11 @@ void AARPGPlayerController::CursorTrace()
 		}
 	}
 		
+}
+
+UARPGAbilitySystemComponent* AARPGPlayerController::GetARPGAbilitySystemComp()
+{
+	if (ARPGAbilitySystemComp == nullptr)
+		ARPGAbilitySystemComp = Cast<UARPGAbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetPawn<APawn>()));
+	return ARPGAbilitySystemComp;
 }

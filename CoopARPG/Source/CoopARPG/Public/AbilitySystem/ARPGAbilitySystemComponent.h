@@ -7,6 +7,8 @@
 
 #include "ARPGAbilitySystemComponent.generated.h"
 
+class UARPGAbilitiesInfoData;
+
 DECLARE_MULTICAST_DELEGATE_OneParam(FEffectAssetTags, const FGameplayTagContainer);
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
@@ -19,12 +21,15 @@ public:
 
 	FEffectAssetTags OnEffectAssetTags;
 
+	void AbilityInputTagHeld(const FGameplayTag& Tag);
+	void AbilityInputTagReleased(const FGameplayTag& Tag);
+
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attributes")
 	TArray<TSubclassOf<UGameplayEffect>> InitialAttributesValues;
 
 	UPROPERTY(EditAnywhere, Category = "Abilities")
-	TArray<TSubclassOf<UGameplayAbility>> StartupGameplayAbilities;
+	TObjectPtr<UARPGAbilitiesInfoData> AbilitiesInfoData;
 	
 	void InitializeAttributes();
 	void InitializeGameplayAbilities();
