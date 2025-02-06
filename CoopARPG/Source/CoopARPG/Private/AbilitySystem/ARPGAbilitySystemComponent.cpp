@@ -11,7 +11,7 @@ void UARPGAbilitySystemComponent::AbilityActorInfoSet()
 	InitializeAttributes();
 	InitializeGameplayAbilities();
 	
-	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UARPGAbilitySystemComponent::EffectApplied);
+	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UARPGAbilitySystemComponent::ClientEffectApplied);
 }
 
 void UARPGAbilitySystemComponent::AbilityInputTagHeld(const FGameplayTag& Tag)
@@ -75,7 +75,7 @@ void UARPGAbilitySystemComponent::InitializeGameplayAbilities()
 	}
 }
 
-void UARPGAbilitySystemComponent::EffectApplied(UAbilitySystemComponent* ASC, const FGameplayEffectSpec& Spec,
+void UARPGAbilitySystemComponent::ClientEffectApplied_Implementation(UAbilitySystemComponent* ASC, const FGameplayEffectSpec& Spec,
                                                 FActiveGameplayEffectHandle ActiveGameplayEffectHandle) const
 {
 	FGameplayTagContainer Tags;

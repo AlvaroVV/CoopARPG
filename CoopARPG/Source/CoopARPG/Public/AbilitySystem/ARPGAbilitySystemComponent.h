@@ -33,7 +33,8 @@ protected:
 	
 	void InitializeAttributes();
 	void InitializeGameplayAbilities();
-	
-	void EffectApplied(UAbilitySystemComponent* ASC, const FGameplayEffectSpec& Spec, FActiveGameplayEffectHandle ActiveGameplayEffectHandle) const;
+
+	UFUNCTION(Client, Reliable)
+	void ClientEffectApplied(UAbilitySystemComponent* ASC, const FGameplayEffectSpec& Spec, FActiveGameplayEffectHandle ActiveGameplayEffectHandle) const;
 	
 };

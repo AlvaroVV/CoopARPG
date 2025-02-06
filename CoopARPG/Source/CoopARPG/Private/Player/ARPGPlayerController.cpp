@@ -102,40 +102,10 @@ void AARPGPlayerController::CursorTrace()
 	CurrentActorIntComp = Hit.GetActor()->FindComponentByClass<UInteractableComponent>();
 	//Hit.GetActor()->GetComponentByClass(UInteractableComponent::StaticClass());
 	
-	
-	//Different situations to check.
-	if (!LastActorIntComp.IsValid())
+	if (LastActorIntComp != CurrentActorIntComp)
 	{
-		if (CurrentActorIntComp.IsValid())
-		{
-			//Case B. LastActor is null and CurrentActor is valid.
-			CurrentActorIntComp->HighlightActor();
-		}
-		else
-		{
-			//Case A. Both are null.
-		}
-	}
-	else 
-	{
-		if (!CurrentActorIntComp.IsValid())
-		{
-			//Case C.LastActor is valid and CurrentActor is null.
-			LastActorIntComp->UnHighlightActor();
-		}
-		else
-		{
-			// Case D. Different Actors
-			if (CurrentActorIntComp != LastActorIntComp)
-			{
-				CurrentActorIntComp->HighlightActor();
-				LastActorIntComp->UnHighlightActor();
-			}
-			else
-			{
-				//Case E. Both are same actor.
-			}
-		}
+		if (LastActorIntComp.Get()) LastActorIntComp->UnHighlightActor();
+		if (CurrentActorIntComp.Get()) CurrentActorIntComp->HighlightActor();
 	}
 		
 }
