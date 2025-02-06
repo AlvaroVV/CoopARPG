@@ -4,7 +4,7 @@
 #include "AbilitySystem/MMC/MMC_MaxMana.h"
 
 #include "AbilitySystem/ARPGAttributeSet.h"
-#include "Combat/CombatComponent.h"
+#include "Combat/ARPGCombatComponent.h"
 
 UMMC_MaxMana::UMMC_MaxMana()
 {
@@ -29,7 +29,7 @@ float UMMC_MaxMana::CalculateBaseMagnitude_Implementation(const FGameplayEffectS
 	GetCapturedAttributeMagnitude(IntelligenceDef, Spec, evaluationParams, intelligenceMagnitude);
 	intelligenceMagnitude = FMath::Max(intelligenceMagnitude, 0.0f);
 	
-	UCombatComponent* combatComp = Cast<AActor>(Spec.GetContext().GetSourceObject())->FindComponentByClass<UCombatComponent>();
+	UARPGCombatComponent* combatComp = Cast<AActor>(Spec.GetContext().GetSourceObject())->FindComponentByClass<UARPGCombatComponent>();
 	if (combatComp)
 	{
 		float charLevel = combatComp->GetLevel();

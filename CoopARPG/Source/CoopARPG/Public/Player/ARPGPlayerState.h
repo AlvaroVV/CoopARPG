@@ -7,7 +7,7 @@
 #include "GameFramework/PlayerState.h"
 #include "ARPGPlayerState.generated.h"
 
-class UCombatComponent;
+class UARPGCombatComponent;
 class UAbilitySystemComponent;
 class UAttributeSet;
 
@@ -23,7 +23,7 @@ public:
 	AARPGPlayerState();
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const {return AttributeSet;}
-	UCombatComponent* GetCombatComponent() const {return CombatComp;}
+	UARPGCombatComponent* GetCombatComponent() const {return CombatComp;}
 
 protected:
 	
@@ -34,5 +34,5 @@ protected:
 	TObjectPtr<UAttributeSet> AttributeSet;
 
 	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<UCombatComponent> CombatComp;
+	TObjectPtr<UARPGCombatComponent> CombatComp;
 };

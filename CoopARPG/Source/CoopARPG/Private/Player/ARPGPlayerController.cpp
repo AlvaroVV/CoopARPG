@@ -73,19 +73,19 @@ void AARPGPlayerController::Move(const FInputActionValue& InputActionValue)
 
 void AARPGPlayerController::AbilityInputPressed(FGameplayTag GameplayTag)
 {
-	GEngine->AddOnScreenDebugMessage(1, 3.0f, FColor::Red, *GameplayTag.ToString());
+	//GEngine->AddOnScreenDebugMessage(1, 3.0f, FColor::Red, *GameplayTag.ToString());
 }
 
 void AARPGPlayerController::AbilityInputReleased(FGameplayTag GameplayTag)
 {
-	GEngine->AddOnScreenDebugMessage(2, 3.0f, FColor::Blue, *GameplayTag.ToString());
+	//GEngine->AddOnScreenDebugMessage(2, 3.0f, FColor::Blue, *GameplayTag.ToString());
 	if (GetARPGAbilitySystemComp() != nullptr)
 		GetARPGAbilitySystemComp()->AbilityInputTagReleased(GameplayTag);
 }
 
 void AARPGPlayerController::AbilityInputHeld(FGameplayTag GameplayTag)
 {
-	GEngine->AddOnScreenDebugMessage(3, 0.1f, FColor::Green, *GameplayTag.ToString());
+	//GEngine->AddOnScreenDebugMessage(3, 0.1f, FColor::Green, *GameplayTag.ToString());
 	if (GetARPGAbilitySystemComp() != nullptr)
 		GetARPGAbilitySystemComp()->AbilityInputTagHeld(GameplayTag);
 }

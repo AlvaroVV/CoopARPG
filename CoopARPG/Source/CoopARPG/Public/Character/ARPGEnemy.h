@@ -7,7 +7,7 @@
 #include "Interaction/InteractableInterface.h"
 #include "ARPGEnemy.generated.h"
 
-class UCombatComponent;
+class UARPGCombatComponent;
 class UInteractableComponent;
 
 

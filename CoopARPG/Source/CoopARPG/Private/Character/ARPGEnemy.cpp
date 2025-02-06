@@ -5,7 +5,7 @@
 
 #include "AbilitySystem/ARPGAbilitySystemComponent.h"
 #include "AbilitySystem/ARPGAttributeSet.h"
-#include "Combat/CombatComponent.h"
+#include "Combat/ARPGCombatComponent.h"
 #include "Interaction/InteractableComponent.h"
 
 
@@ -19,7 +19,7 @@ AARPGEnemy::AARPGEnemy()
 
 	AttributeSet = CreateDefaultSubobject<UARPGAttributeSet>(FName("AttributeSet"));
 
-	CombatComp = CreateDefaultSubobject<UCombatComponent>(TEXT("CombatComponent"));
+	CombatComp = CreateDefaultSubobject<UARPGCombatComponent>(TEXT("CombatComponent"));
 	CombatComp->SetIsReplicated(true);
 }
 

@@ -4,7 +4,7 @@
 #include "AbilitySystem/MMC/MMC_MaxHealth.h"
 #include "AbilitySystem/ARPGAttributeSet.h"
 #include "Character/ARPGCharacter.h"
-#include "Combat/CombatComponent.h"
+#include "Combat/ARPGCombatComponent.h"
 
 UMMC_MaxHealth::UMMC_MaxHealth()
 {
@@ -29,7 +29,7 @@ float UMMC_MaxHealth::CalculateBaseMagnitude_Implementation(const FGameplayEffec
 	GetCapturedAttributeMagnitude(VigorDef, Spec, evaluationParams, vigorMagnitude);
 	vigorMagnitude = FMath::Max(vigorMagnitude, 0.0f);
 	
-	UCombatComponent* combatComp = Cast<AActor>(Spec.GetContext().GetSourceObject())->FindComponentByClass<UCombatComponent>();
+	UARPGCombatComponent* combatComp = Cast<AActor>(Spec.GetContext().GetSourceObject())->FindComponentByClass<UARPGCombatComponent>();
 	if (combatComp)
 	{
 		float charLevel = combatComp->GetLevel();
