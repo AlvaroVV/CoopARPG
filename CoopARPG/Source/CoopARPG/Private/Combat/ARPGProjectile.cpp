@@ -25,6 +25,7 @@ AARPGProjectile::AARPGProjectile()
 	ProjectileMovementComp->InitialSpeed = 550.f;
 	ProjectileMovementComp->MaxSpeed = 550.f;
 	ProjectileMovementComp->ProjectileGravityScale = 0.f;
+	SetReplicates(true);
 }
 
 // Called when the game starts or when spawned

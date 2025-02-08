@@ -19,6 +19,9 @@ protected:
 	
 	virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
 
+	UFUNCTION(BlueprintCallable, Category = "ARPGCombat|Projectile")
+	void SpawnProjectile();
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<AARPGProjectile> ProjectileClass;
 };

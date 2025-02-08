@@ -12,8 +12,12 @@ void UARPGProjectileAbility::ActivateAbility(const FGameplayAbilitySpecHandle Ha
                                              const FGameplayEventData* TriggerEventData)
 {
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
+		
+}
 
-	const bool bIsServer = HasAuthority(&ActivationInfo);
+void UARPGProjectileAbility::SpawnProjectile()
+{
+	const bool bIsServer = GetAvatarActorFromActorInfo()->HasAuthority();
 	if (!bIsServer)
 		return;
 
@@ -34,5 +38,5 @@ void UARPGProjectileAbility::ActivateAbility(const FGameplayAbilitySpecHandle Ha
 
 		Projectile->FinishSpawning(SpawnTransform);
 	}
-		
+	
 }
