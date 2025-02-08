@@ -29,7 +29,7 @@ float UMMC_MaxMana::CalculateBaseMagnitude_Implementation(const FGameplayEffectS
 	GetCapturedAttributeMagnitude(IntelligenceDef, Spec, evaluationParams, intelligenceMagnitude);
 	intelligenceMagnitude = FMath::Max(intelligenceMagnitude, 0.0f);
 	
-	UARPGCombatComponent* combatComp = Cast<AActor>(Spec.GetContext().GetSourceObject())->FindComponentByClass<UARPGCombatComponent>();
+	UARPGCombatComponent* combatComp = Cast<AActor>(Spec.GetContext().GetInstigator())->FindComponentByClass<UARPGCombatComponent>();
 	if (combatComp)
 	{
 		float charLevel = combatComp->GetLevel();

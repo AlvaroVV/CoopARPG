@@ -54,6 +54,7 @@ void UARPGAbilitySystemComponent::InitializeAttributes()
 	{
 		FGameplayEffectContextHandle context =  MakeEffectContext();
 		context.AddSourceObject(GetOwnerActor());
+		context.AddInstigator(GetAvatarActor(), GetAvatarActor());
 		const FGameplayEffectSpecHandle spec = MakeOutgoingSpec(GEClass, 1.0f, context);
 		ApplyGameplayEffectSpecToSelf(*spec.Data.Get());
 	}

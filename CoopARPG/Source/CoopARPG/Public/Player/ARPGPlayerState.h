@@ -23,7 +23,6 @@ public:
 	AARPGPlayerState();
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const {return AttributeSet;}
-	UARPGCombatComponent* GetCombatComponent() const {return CombatComp;}
 
 protected:
 	
@@ -32,7 +31,5 @@ protected:
 
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
-
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<UARPGCombatComponent> CombatComp;
+	
 };

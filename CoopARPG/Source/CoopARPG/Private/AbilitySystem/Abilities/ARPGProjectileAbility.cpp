@@ -3,6 +3,8 @@
 
 #include "AbilitySystem/Abilities/ARPGProjectileAbility.h"
 
+#include "Combat/ARPGCombatComponent.h"
+#include "Combat/ARPGProjectile.h"
 #include "Kismet/KismetSystemLibrary.h"
 
 void UARPGProjectileAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
@@ -11,5 +13,26 @@ void UARPGProjectileAbility::ActivateAbility(const FGameplayAbilitySpecHandle Ha
 {
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 
-	UKismetSystemLibrary::PrintString(this, FString("ACtivateAbility"), true, true, FLinearColor::Yellow, 3);
+	const bool bIsServer = HasAuthority(&ActivationInfo);
+	if (!bIsServer)
+		return;
+
+	UARPGCombatComponent* CombatComponent = GetAvatarActorFromActorInfo()->GetComponentByClass<UARPGCombatComponent>();
+	if (CombatComponent)
+	{
+		const FVector SocketLocation = CombatComponent->GetWeaponSocketLocation();
+
+		FTransform SpawnTransform;
+		SpawnTransform.SetLocation(SocketLocation);
+
+		AARPGProjectile* Projectile = GetWorld()->SpawnActorDeferred<AARPGProjectile>(
+			ProjectileClass,
+			SpawnTransform,
+			GetOwningActorFromActorInfo(),
+			Cast<APawn>(GetOwningActorFromActorInfo()),
+			ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+
+		Projectile->FinishSpawning(SpawnTransform);
+	}
+		
 }

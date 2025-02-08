@@ -3,6 +3,7 @@
 
 #include "Combat/ARPGCombatComponent.h"
 
+#include "Character/ARPGCharacterBase.h"
 #include "Net/UnrealNetwork.h"
 
 
@@ -10,8 +11,38 @@
 UARPGCombatComponent::UARPGCombatComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
+	Weapon = CreateDefaultSubobject<USkeletalMeshComponent>("Weapon");
+	Weapon->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+}
+
+void UARPGCombatComponent::OnRegister()
+{
+	Super::OnRegister();
 	
 }
+
+void UARPGCombatComponent::OnComponentCreated()
+{
+	Super::OnComponentCreated();
+
+	AARPGCharacterBase* owner = Cast<AARPGCharacterBase>(GetOwner());
+	if (owner)
+	{
+		Weapon->SetupAttachment(owner->GetMesh(), FName("WeaponHandSocket"));
+	}
+}
+
+FVector UARPGCombatComponent::GetWeaponSocketLocation() const
+{
+	return Weapon->GetSocketLocation(WeaponSocketName);
+}
+
+void UARPGCombatComponent::OnRep_Level(int32 oldLevel)
+{
+	
+}
+
+
 
 void UARPGCombatComponent::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const
 {
@@ -19,10 +50,6 @@ void UARPGCombatComponent::GetLifetimeReplicatedProps(TArray<class FLifetimeProp
 	DOREPLIFETIME(UARPGCombatComponent, Level);
 }
 
-void UARPGCombatComponent::OnRep_Level(int32 oldLevel)
-{
-	
-}
 
 
 

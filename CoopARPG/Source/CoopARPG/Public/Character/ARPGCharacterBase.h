@@ -26,8 +26,6 @@ public:
 	UAttributeSet* GetAttributeSet() const {return AttributeSet;} 
 	
 protected:
-	UPROPERTY(EditAnywhere, Category = Combat)
-	TObjectPtr<USkeletalMeshComponent> Weapon;
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UARPGCombatComponent> CombatComp;

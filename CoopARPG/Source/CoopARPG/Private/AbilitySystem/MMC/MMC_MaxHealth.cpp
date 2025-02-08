@@ -28,8 +28,10 @@ float UMMC_MaxHealth::CalculateBaseMagnitude_Implementation(const FGameplayEffec
 	float vigorMagnitude = 0.0f;
 	GetCapturedAttributeMagnitude(VigorDef, Spec, evaluationParams, vigorMagnitude);
 	vigorMagnitude = FMath::Max(vigorMagnitude, 0.0f);
-	
-	UARPGCombatComponent* combatComp = Cast<AActor>(Spec.GetContext().GetSourceObject())->FindComponentByClass<UARPGCombatComponent>();
+
+	//The combatComponent now is on the CharacterBase, not the PlayerState
+	//UARPGCombatComponent* combatComp = Cast<AActor>(Spec.GetContext().GetSourceObject())->FindComponentByClass<UARPGCombatComponent>();
+	UARPGCombatComponent* combatComp = Cast<AActor>(Spec.GetContext().GetInstigator())->FindComponentByClass<UARPGCombatComponent>();
 	if (combatComp)
 	{
 		float charLevel = combatComp->GetLevel();

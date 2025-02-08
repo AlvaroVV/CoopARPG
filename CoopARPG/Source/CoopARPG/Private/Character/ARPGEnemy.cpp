@@ -18,15 +18,13 @@ AARPGEnemy::AARPGEnemy()
 	AbilitySystemComp->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
 
 	AttributeSet = CreateDefaultSubobject<UARPGAttributeSet>(FName("AttributeSet"));
-
-	CombatComp = CreateDefaultSubobject<UARPGCombatComponent>(TEXT("CombatComponent"));
-	CombatComp->SetIsReplicated(true);
+	
 }
 
 void AARPGEnemy::BeginPlay()
 {
 	Super::BeginPlay();
-	InteractableComp->RegisterInteractableMesh(Weapon);
+	InteractableComp->RegisterInteractableMesh(CombatComp->GetWeaponMesh());
 	InitAbilityActorInfo();
 }
 

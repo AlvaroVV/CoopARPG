@@ -15,9 +15,6 @@ AARPGPlayerState::AARPGPlayerState()
 	AbilitySystemComp->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 
 	AttributeSet = CreateDefaultSubobject<UARPGAttributeSet>(FName("AttributeSet"));
-
-	CombatComp = CreateDefaultSubobject<UARPGCombatComponent>(TEXT("CombatComponent"));
-	CombatComp->SetIsReplicated(true);
 	
 	SetNetUpdateFrequency(100.0f);
 }

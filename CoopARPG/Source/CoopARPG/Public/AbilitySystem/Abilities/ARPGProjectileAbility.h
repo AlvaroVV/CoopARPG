@@ -6,6 +6,7 @@
 #include "ARPGGameplayAbilityBase.h"
 #include "ARPGProjectileAbility.generated.h"
 
+class AARPGProjectile;
 /**
  * 
  */
@@ -17,5 +18,7 @@ class COOPARPG_API UARPGProjectileAbility : public UARPGGameplayAbilityBase
 protected:
 	
 	virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
-	
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<AARPGProjectile> ProjectileClass;
 };
