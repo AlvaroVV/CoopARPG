@@ -4,6 +4,7 @@
 #include "ARPGAssetManager.h"
 
 #include "ARPGGameplayTags.h"
+#include "AbilitySystem/ARPGAbilitySystemComponent.h"
 
 UARPGAssetManager& UARPGAssetManager::Get()
 {
