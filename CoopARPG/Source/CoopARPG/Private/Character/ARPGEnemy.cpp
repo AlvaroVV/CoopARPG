@@ -31,6 +31,9 @@ void AARPGEnemy::BeginPlay()
 void AARPGEnemy::InitAbilityActorInfo()
 {
 	AbilitySystemComp->InitAbilityActorInfo(this,this);
+	Cast<UARPGAbilitySystemComponent>(AbilitySystemComp)->AbilityActorInfoSet();
+
+	CombatComp->InitStatusBar(nullptr, nullptr, AbilitySystemComp, AttributeSet);
 
 }
 

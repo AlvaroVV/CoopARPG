@@ -6,6 +6,7 @@
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemInterface.h"
 #include "GameFramework/Character.h"
+#include "MotionWarpingComponent.h"
 #include "ARPGCharacterBase.generated.h"
 
 class UARPGGameplayAbilityBase;
@@ -30,11 +31,20 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UARPGCombatComponent> CombatComp;
 
-	UPROPERTY()
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UMotionWarpingComponent> MotionWarpingComp;
+
+	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComp;
 
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
+	
+public:
+	
+	UFUNCTION(BlueprintCallable, Category="ARPG|Movement")
+	virtual void SetMotionWarpingTargetLocation(FName WarpTargetName,  const FVector& NewTargetLocation);
+
 
 private:
 	virtual void InitAbilityActorInfo();

@@ -3,6 +3,8 @@
 
 #include "AbilitySystem/Abilities/ARPGProjectileAbility.h"
 
+#include "AbilitySystemBlueprintLibrary.h"
+#include "AbilitySystemComponent.h"
 #include "Combat/ARPGCombatComponent.h"
 #include "Combat/ARPGProjectile.h"
 #include "Kismet/KismetSystemLibrary.h"
@@ -15,7 +17,7 @@ void UARPGProjectileAbility::ActivateAbility(const FGameplayAbilitySpecHandle Ha
 		
 }
 
-void UARPGProjectileAbility::SpawnProjectile()
+void UARPGProjectileAbility::SpawnProjectile(const FVector& ProjectileTargetPoint)
 {
 	const bool bIsServer = GetAvatarActorFromActorInfo()->HasAuthority();
 	if (!bIsServer)
@@ -25,9 +27,12 @@ void UARPGProjectileAbility::SpawnProjectile()
 	if (CombatComponent)
 	{
 		const FVector SocketLocation = CombatComponent->GetWeaponSocketLocation();
+		FRotator Rotation = (ProjectileTargetPoint - SocketLocation).Rotation();
+		Rotation.Pitch = 0.0f;
 
 		FTransform SpawnTransform;
 		SpawnTransform.SetLocation(SocketLocation);
+		SpawnTransform.SetRotation(Rotation.Quaternion());
 
 		AARPGProjectile* Projectile = GetWorld()->SpawnActorDeferred<AARPGProjectile>(
 			ProjectileClass,
@@ -35,6 +40,10 @@ void UARPGProjectileAbility::SpawnProjectile()
 			GetOwningActorFromActorInfo(),
 			Cast<APawn>(GetOwningActorFromActorInfo()),
 			ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+
+		UAbilitySystemComponent* SourceASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetAvatarActorFromActorInfo());
+		FGameplayEffectSpecHandle SpecHandle = SourceASC->MakeOutgoingSpec(GameplayEffectClass, GetAbilityLevel(), SourceASC->MakeEffectContext());
+		Projectile->GE_OnCollision_SpecHandle = SpecHandle;
 
 		Projectile->FinishSpawning(SpawnTransform);
 	}

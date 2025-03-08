@@ -13,5 +13,11 @@ UCLASS()
 class COOPARPG_API UARPGGameplayAbilityBase : public UGameplayAbility
 {
 	GENERATED_BODY()
+
+
+protected:
+
+	UFUNCTION(BlueprintCallable, Category = "ARPG|Movement")
+	void SetLocationWarping(FName WarpTargetName, const FVector& Location);
 	
 };
