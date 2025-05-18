@@ -17,8 +17,13 @@ UARPGCombatComponent::UARPGCombatComponent()
 	
 	Weapon = CreateDefaultSubobject<USkeletalMeshComponent>("Weapon");
 	Weapon->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-
-	StatusBarWidgetComp = CreateDefaultSubobject<UWidgetComponent>("StatusBarWidget");
+	
+	if (StatusBarWidgetControllerClass != nullptr)
+	{
+		StatusBarWidgetComp = CreateDefaultSubobject<UWidgetComponent>("StatusBarWidget");
+		StatusBarWidgetComp->SetupAttachment(GetOwner()->GetRootComponent());
+		StatusBarWidgetComp->RegisterComponent();
+	}
 	
 }
 
@@ -30,7 +35,7 @@ void UARPGCombatComponent::OnComponentCreated()
 	if (owner)
 	{
 		Weapon->SetupAttachment(owner->GetMesh(), FName("WeaponHandSocket"));
-		StatusBarWidgetComp->SetupAttachment(owner->GetRootComponent());
+		Weapon->RegisterComponent();
 	}
 }
 
